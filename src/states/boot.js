@@ -1,7 +1,7 @@
 export default class Boot extends Phaser.State {
   preload() {
     this.stage.backgroundColor = '#f6e787'
-    this.load.image('background', '../images/backgrounds/background.jpg')
+    this.load.image('background', './images/backgrounds/background.jpg')
   }
   create() {
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
