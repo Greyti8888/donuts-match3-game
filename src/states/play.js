@@ -7,16 +7,15 @@ export default class Play extends Phaser.State {
 		// Bottom bg
 		this.bgBottom = this.add.graphics(0, 0)
 		this.bgBottom.beginFill(0xf6e787)
-		this.bgBottom.drawRect(0, this.world.height - 100, this.world.width, 100)
+		this.bgBottom.drawRect(0, this.world.height - 200, this.world.width, 200)
 		this.bgBottom.endFill()
 		//Score
 		this.score = 0
-		this.scoreText = this.add.text(0, -15, '', {font: '70px Fredoka One', fill: 'white'})
+		this.scoreText = this.add.text(0, -15, '50000', {font: '70px Fredoka One', fill: 'white'})
 		this.scoreText.anchor.set(0.5)
-		this.bgScore = this.add.sprite(this.world.centerX + 10, this.world.height - 40, 'bg-score')
+		this.bgScore = this.add.sprite(this.world.centerX + 20, this.world.height - 80, 'bg-score')
 		this.bgScore.addChild(this.scoreText)
 		this.bgScore.anchor.set(0.5)
-		this.bgScore.scale.set(0.5)
 		this.bgScore.inputEnabled = true
 		this.scoreSound = this.add.audio('score-sound')
 		// Timer
@@ -24,9 +23,9 @@ export default class Play extends Phaser.State {
 		this.bgTimer = this.add.graphics(0, 0)
 		this.bgTimer.beginFill(0x777777);
 		this.bgTimer.lineStyle(5, 0xbbf6f6)
-		this.bgTimer.drawCircle(50, this.world.height - 48, 80)
+		this.bgTimer.drawCircle(100, this.world.height - 96, 160)
 		this.bgTimer.endFill()
-		this.timerText = this.add.text(51, this.world.height - 45, this.timeLeft, {font: '45px Fredoka One', fill: 'white'})
+		this.timerText = this.add.text(102, this.world.height - 90, this.timeLeft, {font: '90px Fredoka One', fill: 'white'})
 		this.timerText.anchor.set(0.5)
 		// Countdown
 		this.timer = this.game.time.create(false);
@@ -35,11 +34,11 @@ export default class Play extends Phaser.State {
 		// Menu button
 		this.menu = this.add.graphics(0, 0)
 		this.menu.beginFill(0xD81414);
-		this.menu.drawRoundedRect(this.world.width - 80, this.world.height - 66, 70, 45, 10)
+		this.menu.drawRoundedRect(this.world.width - 160, this.world.height - 132, 140, 90, 10)
 		this.menu.endFill()
 		this.menu.inputEnabled = true
 		this.menu.events.onInputDown.add(()=>this.gameOver())
-		this.menuText = this.add.text(this.world.width - 65, this.world.height - 55, 'END', {font: '20px Fredoka One', fill: 'white'})
+		this.menuText = this.add.text(this.world.width - 130, this.world.height - 110, 'END', {font: '40px Fredoka One', fill: 'white'})
 
 		// Tiles
 		this.tiles = []

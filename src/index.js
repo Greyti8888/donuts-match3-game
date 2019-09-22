@@ -7,8 +7,8 @@ import GameOver from 'states/gameover'
 class Game extends Phaser.Game {
 
 	constructor() {
-		super(360, 640, Phaser.AUTO, 'content', null)
-		//super(540, 960, Phaser.AUTO, 'content', null)
+		//super(360, 640, Phaser.AUTO, 'content', null)
+		super(720, 1280, Phaser.AUTO, 'content', null)
 		this.state.add('Boot', Boot)
 		this.state.add('Preload', Preload)
 		this.state.add('Menu', Menu)
