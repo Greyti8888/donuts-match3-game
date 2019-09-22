@@ -1,9 +1,13 @@
 export default class Menu extends Phaser.State {
-  create() {
+  preload() {
     this.add.sprite(0, 0, 'background')
-    // Music
-    this.music = this.add.audio('bg-music')
+    this.music = this.add.audio('bg-music', 0.5)
     this.music.loopFull()
+  }
+  create() {
+    // Music
+    //this.music = this.add.audio('bg-music')
+    //this.music.loopFull()
     // Sound button
     this.soundBtn = this.add.button(this.world.width * 0.75, 50, 'btn-sfx', this.handleSound, this)
     if (this.sound.mute) this.soundBtn.tint = 0x808080
@@ -16,7 +20,7 @@ export default class Menu extends Phaser.State {
     this.playBtn = this.add.button(this.world.width * 0.5, this.world.height * 0.6, 'btn-play', this.startGame, this)
     this.playBtn.anchor.set(0.5)
     //this.playBtn.scale.setTo(0.5)
-    this.playBtnSound = this.add.audio('select-1')
+    this.playBtnSound = this.add.audio('select-1', 0.5)
     this.playBtn.setDownSound(this.playBtnSound)
     //this.in('bottom', this.playBtn)
   }

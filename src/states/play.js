@@ -2,8 +2,8 @@ export default class Play extends Phaser.State {
 	create() {
 		this.background = this.add.sprite(0, 0, 'background')
 		// Music
-		this.music = this.add.audio('bg-music')
-		this.music.loopFull()
+		this.music = this.add.audio('bg-music', 0.5)
+		this.music.play()
 		// Bottom bg
 		this.bgBottom = this.add.graphics(0, 0)
 		this.bgBottom.beginFill(0xf6e787)
@@ -11,15 +11,15 @@ export default class Play extends Phaser.State {
 		this.bgBottom.endFill()
 		//Score
 		this.score = 0
-		this.scoreText = this.add.text(0, -15, '50000', {font: '70px Fredoka One', fill: 'white'})
+		this.scoreText = this.add.text(0, -15, '', {font: '70px Fredoka One', fill: 'white'})
 		this.scoreText.anchor.set(0.5)
 		this.bgScore = this.add.sprite(this.world.centerX + 20, this.world.height - 80, 'bg-score')
 		this.bgScore.addChild(this.scoreText)
 		this.bgScore.anchor.set(0.5)
 		this.bgScore.inputEnabled = true
-		this.scoreSound = this.add.audio('score-sound')
+		this.scoreSound = this.add.audio('score-sound', 0.5)
 		// Timer
-		this.timeLeft = 60
+		this.timeLeft = 45
 		this.bgTimer = this.add.graphics(0, 0)
 		this.bgTimer.beginFill(0x777777);
 		this.bgTimer.lineStyle(5, 0xbbf6f6)
@@ -28,7 +28,7 @@ export default class Play extends Phaser.State {
 		this.timerText = this.add.text(102, this.world.height - 90, this.timeLeft, {font: '90px Fredoka One', fill: 'white'})
 		this.timerText.anchor.set(0.5)
 		// Countdown
-		this.timer = this.game.time.create(false);
+		this.timer = this.game.time.create();
 		this.timer.loop(Phaser.Timer.SECOND, this.updateTimer, this);
 		this.timer.start();
 		// Menu button

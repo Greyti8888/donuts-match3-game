@@ -10,11 +10,9 @@ export default class GameOver extends Phaser.State {
 		this.bgScore = this.add.sprite(this.world.centerX, this.world.height * 0.4, 'bg-score')
 		this.bgScore.addChild(this.scoreText)
 		this.bgScore.anchor.set(0.5)
-    this.bgScore.scale.set(0.6) 
     
     this.timeup = this.add.sprite(this.world.width * 0.5, this.world.height * 0.55, 'timeup')
     this.timeup.anchor.set(0.5)
-    this.timeup.scale.set(0.5)
     this.input.onDown.add(() => {
       this.state.start('Menu')
     })
