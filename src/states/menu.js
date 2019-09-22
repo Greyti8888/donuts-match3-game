@@ -1,13 +1,10 @@
 export default class Menu extends Phaser.State {
   preload() {
     this.add.sprite(0, 0, 'background')
-    this.music = this.add.audio('bg-music', 0.5)
-    this.music.loopFull()
   }
   create() {
     // Music
-    //this.music = this.add.audio('bg-music')
-    //this.music.loopFull()
+    this.music = this.add.audio('bg-music', 0.5, true)
     // Sound button
     this.soundBtn = this.add.button(this.world.width * 0.75, 50, 'btn-sfx', this.handleSound, this)
     if (this.sound.mute) this.soundBtn.tint = 0x808080
