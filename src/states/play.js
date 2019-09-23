@@ -34,12 +34,15 @@ export default class Play extends Phaser.State {
 		// Menu button
 		this.menu = this.add.graphics(0, 0)
 		this.menu.beginFill(0xD81414);
-		this.menu.drawRoundedRect(this.world.width - 160, this.world.height - 132, 140, 90, 10)
+		this.menu.drawRoundedRect(this.world.width - 160, this.world.height - 95, 140, 70, 10)
 		this.menu.endFill()
 		this.menu.inputEnabled = true
 		this.menu.events.onInputDown.add(()=>this.gameOver())
-		this.menuText = this.add.text(this.world.width - 130, this.world.height - 110, 'END', {font: '40px Fredoka One', fill: 'white'})
-
+		this.menuText = this.add.text(this.world.width - 130, this.world.height - 85, 'END', {font: '40px Fredoka One', fill: 'white'})
+		// Sound button
+		this.soundBtn = this.add.button(this.world.width - 130, this.world.height - 190, 'btn-sfx', this.handleSound, this)
+		if (this.sound.mute) this.soundBtn.tint = 0x808080
+		this.soundBtn.scale.set(0.6)
 		// Tiles
 		this.tiles = []
 		this.collums = 6
@@ -63,14 +66,18 @@ export default class Play extends Phaser.State {
 		this.timeLeft--
 		if (this.timeLeft == 0) {
 			this.gameOver()
-		}
-		this.timerText.setText(this.timeLeft)
+		} else this.timerText.setText(this.timeLeft)
 	}
+	handleSound() {
+    if (this.sound.mute) this.soundBtn.tint = 0xFFFFFF
+    else this.soundBtn.tint = 0x808080
+    this.sound.mute = !this.sound.mute
+  }
 	fillBoard() {
 		for (let col = 0; col < this.collums; col++) {
 			let currColRows = []
 			for (let row = 0; row < this.rows * 2; row++) {
-				currColRows.push(this.createTile(col, row, 1000, currColRows, true))
+				currColRows.push(this.createTile(col, row, 750, currColRows, true))
 			}
 			this.tiles.push(currColRows)
 		}
@@ -99,7 +106,7 @@ export default class Play extends Phaser.State {
 		tile.addChild(this.make.sprite(6, 6, 'gem-shadow'))
 		tile.addChild(this.make.sprite(0, 0, color))
 		tile.anchor.setTo(0.5)
-		tile.children.forEach(c => c.anchor.setTo(0.5))
+		tile.children.forEach(c => c.anchor.set(0.5))
 		tile.width = size 
 		tile.height = size
 		tile.col = col
@@ -248,8 +255,8 @@ export default class Play extends Phaser.State {
 		;[origT1.col, origT2.col] = [origT2.col, origT1.col]
 		;[origT1.row, origT2.row] = [origT2.row, origT1.row]
 
-		this.add.tween(origT1).to({x: origT2.x, y: origT2.y}, 300, Phaser.Easing.Linear.None, true)
-		this.add.tween(origT2).to({x: origT1.x, y: origT1.y}, 300, Phaser.Easing.Linear.None, true)
+		this.add.tween(origT1).to({x: origT2.x, y: origT2.y}, 150, Phaser.Easing.Linear.None, true)
+		this.add.tween(origT2).to({x: origT1.x, y: origT1.y}, 150, Phaser.Easing.Linear.None, true)
 		.onComplete.add(() => this.destroyMatched(matched))
 	}
 
@@ -282,7 +289,7 @@ export default class Play extends Phaser.State {
 		// Destroy
 		for (let tile of matched) {
 			this.add.tween(tile.scale)
-				.to({x: 0, y: 0}, 275, Phaser.Easing.Linear.None, true)
+				.to({x: 0, y: 0}, 200, Phaser.Easing.Linear.None, true)
 				.onComplete.add(() => tile.destroy())
 		}
 	}
@@ -295,7 +302,7 @@ export default class Play extends Phaser.State {
 	}
 
 	handleDestroy(tile) {
-		let speed = 600
+		let speed = 300
 		let b = {col: tile.col, row: tile.row}
 		// Delete from array
 		this.tiles[b.col].splice(b.row, 1)
