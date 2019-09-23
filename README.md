@@ -5,10 +5,14 @@
 **JavaScript, Phaser 2**
 
 ---
-**Scoring**
-- Gain points by matching 3 or more of the same donuts in a row
-- Matching more than 3 donuts will give you bonus of 100 for every extra donut
+**Goal:**
+- Score as many points as you can, before time runs out
 
-**Game mechanics**
-- You can swap any adjusted donuts
+**Scoring:**
+- Line up 3 or more of the same donut to score points
+- You get 100 points for each donut
+- Matching more than 3 donuts, will give you extra 100 points for 4-th and further donuts
+
+**Controls:**
+- You can swap any two donuts that are adjacent horizontally or vertically
 - Swap by clicking on them or by swiping in direction you want to swap
