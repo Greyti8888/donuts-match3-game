@@ -1,6 +1,7 @@
 export default class Menu extends Phaser.State {
   preload() {
-    this.add.sprite(0, 0, 'background')
+    this.background = this.add.sprite(0, 0, 'background')
+    this.background.events.onInputDown.add(() => this.returnToMenu())
   }
   create() {
     // Music
@@ -11,11 +12,11 @@ export default class Menu extends Phaser.State {
     if (this.sound.mute) this.soundBtn.tint = 0x808080
     this.soundBtn.visible = false
     // Logo
-    this.logo = this.add.sprite(this.world.width * 0.5, this.world.height * 0.4, 'logo')
+    this.logo = this.add.sprite(this.world.centerX, this.world.height * 0.4, 'logo')
     this.logo.anchor.set(0.5)
     this.in('top', this.logo) 
     // Start
-    this.playBtn = this.add.button(this.world.width * 0.5, this.world.height * 0.6, 'btn-play', this.startGame, this)
+    this.playBtn = this.add.button(this.world.centerX, this.world.height * 0.6, 'btn-play', this.startGame, this)
     this.playBtn.anchor.set(0.5)
     this.playBtnSound = this.add.audio('select-1', 0.5)
     this.playBtn.setDownSound(this.playBtnSound)
@@ -27,12 +28,6 @@ export default class Menu extends Phaser.State {
     this.rulesBtn.inputEnabled = true
     this.rulesBtn.events.onInputDown.add(() => this.rules())
     this.in('bottom', this.rulesBtn)  
-
-    this.rulesBg = this.add.sprite(0, 0, 'background')
-    this.rulesBg.visible = false
-    this.rulesBg.inputEnabled = false
-    this.rulesBg.events.onInputDown.add(() => this.returnToMenu())
-
     let rules = `
 Goal:
 Score as many points as you can, before time runs out
@@ -52,15 +47,23 @@ Swap by clicking on them or by swiping in direction you want to swap
   }
   rules() {
     this.music.stop()
-    this.rulesBg.visible = true
-    this.rulesBg.inputEnabled = true
+    this.world.bringToTop(this.background)
+    this.background.inputEnabled = true
     this.rulesText.visible = true
+    this.world.bringToTop(this.rulesText)
+    this.world.bringToTop(this.playBtn)
+    this.playBtn.scale.set(0.65)
+    this.playBtn.x = this.world.centerX
+    this.playBtn.y = this.world.height - 100
   }
   returnToMenu() {
     this.music.play()
-    this.rulesBg.visible = false
-    this.rulesBg.inputEnabled = false
+    this.world.sendToBack(this.background)
+    this.background.inputEnabled = false
     this.rulesText.visible = false
+    this.playBtn.scale.set(1)
+    this.playBtn.x = this.world.centerX
+    this.playBtn.y = this.world.height * 0.6
   }
   in(from, object) {
     let tween = this.add.tween(object)
@@ -70,11 +73,15 @@ Swap by clicking on them or by swiping in direction you want to swap
     .onComplete.add(()=> this.soundBtn.visible = true)
   }
   startGame() {
-    this.music.stop()  
-    this.out('top', this.logo)
-    this.out('bottom', this.rulesBtn)
-    this.out('bottom', this.playBtn, true)
-    
+    if (this.rulesText.visible) {
+      this.out('top', this.rulesText)
+      this.out('bottom', this.playBtn, true)
+    } else {
+      this.music.stop()  
+      this.out('top', this.logo)
+      this.out('bottom', this.rulesBtn)
+      this.out('bottom', this.playBtn, true)
+    }
   }
 
   out(to, object, start) {
